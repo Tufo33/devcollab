@@ -17,6 +17,7 @@ model User {
   createdTasks    Task[]      @relation("TaskCreator")
   assignedTasks   Task[]      @relation("TaskAssigned")
   messages        Message[]
+  workspaceMembers WorkspaceMember[]
 }
 
 model Workspace {
@@ -28,6 +29,7 @@ model Workspace {
   owner     User      @relation("WorkspaceOwner", fields: [ownerId], references: [id])
   tasks     Task[]
   messages  Message[]
+  members   WorkspaceMember[]
 }
 
 model Task {
@@ -54,4 +56,14 @@ model Message {
 
   user        User      @relation(fields: [userId], references: [id])
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model WorkspaceMember {
+  id          Int       @id @default(autoincrement())
+  role        String
+  joinedAt    DateTime  @default(now())
+  userId      Int
+  workspaceId Int
+  user        User        @relation(fields: [userId], references: [id])
+  workspace   Workspace   @relation(fields: [workspaceId], references: [id])
 }
