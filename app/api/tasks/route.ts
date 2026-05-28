@@ -17,7 +17,6 @@ export async function POST(request: Request) {
                 workspaceId: body.workspaceId,
             },
         })
-        console.log("Task erstellt:", task)  // ← neu
         return NextResponse.json(task)
     } catch(error) {
         console.error(error)
